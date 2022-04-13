@@ -1,45 +1,27 @@
 import React from "react";
-import {
-	Card,
-	CardMedia,
-	CardContent,
-	CardActions,
-	Typography,
-	IconButton,
-} from "@material-ui/core";
-import { AddShoppingCart, CallMissedSharp } from "@material-ui/icons";
-import { mergeClasses } from "@material-ui/styles";
-
 import useStyles from "./styles";
+import { Button, Card } from "react-bootstrap";
+import { ShoppingCart } from "@material-ui/icons";
 
 const Product = ({ product, onAddToCart }) => {
-	const classes = useStyles();
-
-	// const handleAddToCart = () => onAddToCart(product.id, 1);
-
 	return (
-		<Card className={classes.root}>
-			<CardMedia
-				className={classes.media}
-				image={product.image}
-				title={product.title}
-			/>
-			<CardContent>
-				<div className="classes.cardContent">
-					<Typography variant="h5" gutterBottom>
-						{product.name}
-					</Typography>
-					<Typography variant="h5">{product.price}</Typography>
+		<Card className="shadow-sm">
+			<Card.Img variant="top" src={product.media.source} />
+			<Card.Body className="">
+				<div className="d-flex justify-content-between align-items-center">
+					<Card.Title as="h5">{product.name}</Card.Title>
+					<Card.Subtitle>{product.price.formatted_with_symbol}</Card.Subtitle>
 				</div>
-				<Typography variant="body2" color="textSecondary">
-					{product.description}
-				</Typography>
-			</CardContent>
-			<CardActions disableSpacing className={classes.CardActions}>
-				<IconButton aria-label="Add to Cart">
-					<AddShoppingCart />
-				</IconButton>
-			</CardActions>
+				<Card.Text dangerouslySetInnerHTML={{ __html: product.description }} />
+
+				<Button
+					variant="light"
+					className="float-end text-muted"
+					onClick={() => onAddToCart(product.id, 1)}
+				>
+					<ShoppingCart />
+				</Button>
+			</Card.Body>
 		</Card>
 	);
 };
